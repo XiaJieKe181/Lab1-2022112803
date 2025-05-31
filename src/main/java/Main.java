@@ -145,7 +145,7 @@ public class Main {
     }
 
     // 查询桥接词
-    private static void queryBridgeWords(Scanner scanner) {
+    public static void queryBridgeWords(Scanner scanner) {
         System.out.print(" 请输入两个单词（格式：word1 word2）: ");
         String input = scanner.nextLine().trim();
         String[] words = input.split("\\s+");
@@ -158,7 +158,7 @@ public class Main {
         System.out.println(result);
     }
 
-    private static String queryBridgeWords(String word1, String word2) {
+    public static String queryBridgeWords(String word1, String word2) {
         // 检查单词是否在图中
         if (!graph.getNodes().contains(word1) || !graph.getNodes().contains(word2)) {
             return "No word1 or word2 in the graph!";
