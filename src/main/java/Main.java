@@ -6,9 +6,18 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
-public class Main {
-    private static DirectedGraph graph = new DirectedGraph();
 
+
+public class Main {
+    public static DirectedGraph graph = new DirectedGraph();
+    public static void buildGraphFromDefaultCorpus() {
+        try {
+            String filePath = "resources/Easy Test.txt";
+            generateGraphFromFile(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException("语料文件读取失败！", e);
+        }
+    }
     public static void main(String[] args) {
         // 1. 选择语料文件
         String filePath = selectCorpusFile();
@@ -101,7 +110,7 @@ public class Main {
     }
 
     // 生成图（增强健 robustness）
-    private static void generateGraphFromFile(String filePath) throws IOException {
+    public static void generateGraphFromFile(String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             int lineNumber = 0;
@@ -225,7 +234,7 @@ public class Main {
     }
 
     // 计算最短路径
-    private static void calcShortestPath(Scanner scanner) {
+    public static void calcShortestPath(Scanner scanner) {
         System.out.print(" 请输入起点和终点（格式：start end）: ");
         String input = scanner.nextLine().trim();
         String[] nodes = input.split("\\s+");
@@ -238,7 +247,7 @@ public class Main {
         System.out.println(result);
     }
 
-    private static String calcShortestPath(String start, String end) {
+    public static String calcShortestPath(String start, String end) {
         if (!graph.getNodes().contains(start)) {
             return "错误: 起点 '" + start + "' 不存在！";
         }
@@ -292,7 +301,7 @@ public class Main {
     }
 
     // 计算所有PageRank
-    private static void calcAllPageRank() {
+    public static void calcAllPageRank() {
         final double DAMPING_FACTOR = 0.85;
         final int MAX_ITERATIONS = 100;
         final double EPSILON = 1e-6;
@@ -509,6 +518,15 @@ class GraphPanel extends JPanel {
             g.drawString(node,
                     pos.x - textWidth / 2,
                     pos.y + textHeight / 4);
+        }
+    }
+    public static void buildGraphFromDefaultCorpus() {
+        try {
+            String filePath = "resources/Easy Test.txt";
+            Main.generateGraphFromFile(filePath);
+        } catch (IOException e) {
+            System.err.println("错误: 无法读取默认语料文件！");
+            e.printStackTrace();
         }
     }
 }
